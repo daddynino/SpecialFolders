@@ -16,7 +16,7 @@ Public Module KnownFolders
 #End Region
 
 #Region "private static string[] _knownFolderGuids = new string[]"
-    Private _knownFolderGuids As String() =
+    Private ReadOnly _knownFolderGuids As String() =
     {
         "{008CA0B1-55B4-4C56-B8A8-4DE4B299D3BE}",
         "{724EF170-A42D-4FEF-9F26-B60E846FBA4F}",
@@ -185,7 +185,9 @@ Public Module KnownFolders
     '/// <param name="knownFolder">The known folder which will be initialized.</param>
     '/// <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the known
     '///     folder could not be initialized.</exception>
+#Disable Warning IDE0051 ' Remove unused private members
     Private Sub Initialize(ByVal myKnownFolder As KnownFolder)
+#Enable Warning IDE0051 ' Remove unused private members
 
         Initialize(myKnownFolder, False)
 
@@ -210,9 +212,11 @@ Public Module KnownFolders
 
     Public ExternalException As New Exception
 
+#Disable Warning IDE0060 ' Remove unused parameter
     Private Function GetPath(ByVal myKnownFolder As KnownFolder, ByVal flags As KnownFolderFlags,
             ByVal defaultUser As Boolean) As String
-        Dim outPath As String = Nothing
+#Enable Warning IDE0060 ' Remove unused parameter
+        Dim outPath As String ' = Nothing
         Dim hOutPath As IntPtr
         Dim result As Integer
 
@@ -276,7 +280,7 @@ Public Module KnownFolders
 
 
     '/// <summary>
-    '/// Standard folders registered with the system. These folders are installed with 
+    '/// Standard folders registered with the system. These folders are installed with
     '/// Windows Vista and later operating systems, and a computer will have only folders
     '/// appropriate to it installed.
     '/// </summary>
