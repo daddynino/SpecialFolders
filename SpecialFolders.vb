@@ -1,4 +1,5 @@
 Imports System
+Imports System.IO
 Imports System.Runtime.InteropServices
 
 Public Class PathNotFoundException
@@ -116,7 +117,7 @@ Public Module KnownFolders
 #End Region
 
 #Region "---- METHODS (PUBLIC) ---------------------------------------------------------------------"
-#End Region
+
 
     ''' <summary>
     ''' Gets the current path to the specified known folder as currently configured. This does
@@ -180,6 +181,114 @@ Public Module KnownFolders
     End Function
 
     ''' <summary>
+    ''' Sets the path for a specified known folder.
+    ''' </summary>
+    ''' <param name="myKnownFolder">The known folder to update.</param>
+    ''' <param name="DestinationFolder">The new path for the known folder.</param>
+    ''' <returns>
+    ''' A <see cref="FunctionResult"/> indicating the success or failure of the operation.
+    ''' </returns>
+    ''' <remarks>
+    ''' This method uses the SHSetKnownFolderPath API to update the location of a known folder.
+    ''' </remarks>
+    Public Function SetFolderPath(ByVal myKnownFolder As KnownFolder, ByVal DestinationFolder As String) As FunctionResult
+        If String.IsNullOrEmpty(DestinationFolder) Then
+            Return FunctionResult.InvalidInput
+        End If
+
+        Dim FldGuid As New Guid(_knownFolderGuids(CInt(myKnownFolder)))
+
+        Dim result As Integer = SHSetKnownFolderPath(FldGuid, 0, IntPtr.Zero, DestinationFolder)
+
+        If result = 0 Then ' S_OK
+            Console.WriteLine("Desktop path updated successfully.")
+            Return FunctionResult.Success
+        Else
+            Console.WriteLine("Error updating known folder path.")
+            Return FunctionResult.UnknownError
+        End If
+
+    End Function
+
+    ''' <summary>
+    ''' Moves all files and subdirectories from the source folder to the destination folder.
+    ''' </summary>
+    ''' <param name="SourceFolder">The full path of the folder from which files and directories will be moved.</param>
+    ''' <param name="DestFolder">The full path of the folder to which files and directories will be moved.</param>
+    ''' <returns>A <see cref="FunctionResult"/> value indicating the result of the operation.</returns>
+    ''' <exception cref="IOException">Thrown when an I/O error occurs during the operation.</exception>
+    ''' <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission.</exception>
+    Public Function MoveAffectedFolderItems(ByVal SourceFolder As String, ByVal DestFolder As String) As FunctionResult
+        ' Check if the source folder exists
+        If Not Directory.Exists(SourceFolder) Then
+            Return FunctionResult.InvalidInput
+        End If
+
+        ' Ensure the source and destination folders are not the same
+        If SourceFolder.Equals(DestFolder, StringComparison.OrdinalIgnoreCase) Then
+            Return FunctionResult.MatchingFile
+        End If
+
+        ' Attempt to create the destination folder if it doesn't exist
+        Try
+            If Not Directory.Exists(DestFolder) Then
+                Directory.CreateDirectory(DestFolder)
+            End If
+        Catch ex As Exception
+            ' Return an I/O error if the destination folder cannot be created
+            Return FunctionResult.IOError
+        End Try
+
+        ' Attempt to move files and directories from source to destination
+        Try
+            ' Move files from source to destination
+            MoveFiles(SourceFolder, DestFolder)
+            ' Move subdirectories from source to destination
+            MoveDirectories(SourceFolder, DestFolder)
+            ' If everything succeeds, return success
+            Return FunctionResult.Success
+        Catch ex As Exception
+            ' Return an I/O error if any operation fails
+            Return FunctionResult.IOError
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Moves all files from the source folder to the destination folder.
+    ''' </summary>
+    ''' <param name="SourceFolder">The full path of the source folder.</param>
+    ''' <param name="DestFolder">The full path of the destination folder.</param>
+    ''' <exception cref="IOException">Thrown when an I/O error occurs during the operation.</exception>
+    Private Sub MoveFiles(ByVal SourceFolder As String, ByVal DestFolder As String)
+        ' Get all files in the source folder
+        Dim files As String() = Directory.GetFiles(SourceFolder)
+        For Each file As String In files
+            ' Determine the destination file path
+            Dim destFile As String = Path.Combine(DestFolder, Path.GetFileName(file))
+            ' Move the file to the destination
+            IO.File.Move(file, destFile)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Moves all subdirectories from the source folder to the destination folder.
+    ''' </summary>
+    ''' <param name="SourceFolder">The full path of the source folder.</param>
+    ''' <param name="DestFolder">The full path of the destination folder.</param>
+    ''' <exception cref="IOException">Thrown when an I/O error occurs during the operation.</exception>
+    Private Sub MoveDirectories(ByVal SourceFolder As String, ByVal DestFolder As String)
+        ' Get all directories in the source folder
+        Dim directories As String() = Directory.GetDirectories(SourceFolder)
+        For Each dir As String In directories
+            ' Determine the destination directory path
+            Dim destDir As String = Path.Combine(DestFolder, Path.GetFileName(dir))
+            ' Move the directory to the destination
+            Directory.Move(dir, destDir)
+        Next
+    End Sub
+
+#End Region
+    ''' <summary>
     ''' Creates and initializes the known folder.
     ''' </summary>
     ''' <param name="knownFolder">The known folder which will be initialized.</param>
@@ -208,11 +317,25 @@ Public Module KnownFolders
     End Sub
 
 #Region "---- METHODS (PRIVATE) --------------------------------------------------------------------"
-#End Region
+
 
     Public ExternalException As New Exception
 
 #Disable Warning IDE0060 ' Remove unused parameter
+    ''' <summary>
+    ''' Retrieves the path for a specified known folder.
+    ''' </summary>
+    ''' <param name="myKnownFolder">The known folder to retrieve the path for.</param>
+    ''' <param name="flags">Options that specify special retrieval options.</param>
+    ''' <param name="defaultUser">Indicates whether to retrieve the path for the default user or the current user.</param>
+    ''' <returns>The path of the specified known folder as a <see cref="String"/>.</returns>
+    ''' <exception cref="PathNotFoundException">
+    ''' Thrown when the known folder path cannot be retrieved, 
+    ''' typically because the folder is not available on this system.
+    ''' </exception>
+    ''' <remarks>
+    ''' This method uses the SHGetKnownFolderPath API to retrieve the path of a known folder.
+    ''' </remarks>
     Private Function GetPath(ByVal myKnownFolder As KnownFolder, ByVal flags As KnownFolderFlags,
             ByVal defaultUser As Boolean) As String
 #Enable Warning IDE0060 ' Remove unused parameter
@@ -248,18 +371,53 @@ Public Module KnownFolders
     '''     specifies the path of the known folder. The returned path does not include a
     '''     trailing backslash.</param>
     ''' <returns>Returns S_OK if successful, or an error value otherwise.</returns>
-    'Declare Auto Function SHGetKnownFolderPath Lib "Shell32.dll" ( _
-    '    ByVal rfid As Guid, ByVal dwFlags As UInteger, ByVal hToken As IntPtr, _
-    '    ByRef pszPath As String) As Integer
-    <DllImport("shell32.dll")>
-    Private Function SHGetKnownFolderPath(
+    Declare Auto Function SHGetKnownFolderPath Lib "Shell32.dll" (
+        ByVal rfid As Guid, ByVal dwFlags As UInteger, ByVal hToken As IntPtr,
+        ByRef pszPath As String) As Integer
+    <DllImport("shell32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+    Friend Function SHGetKnownFolderPath(
         <MarshalAs(UnmanagedType.LPStruct)> ByVal rfid As Guid,
         ByVal dwFlags As UInt32,
         ByVal hToken As IntPtr,
-        ByRef pszPath As IntPtr
-        ) As Int32
+        <Out> ByRef pszPath As IntPtr
+    ) As Integer
     End Function
 
+    <DllImport("shell32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+    Friend Function SHSetKnownFolderPath(
+        <MarshalAs(UnmanagedType.LPStruct)> ByVal rfid As Guid,
+        ByVal dwFlags As UInt32,
+        ByVal hToken As IntPtr,
+        ByVal pszPath As String
+    ) As Integer
+    End Function
+
+    'Private Function MoveFolderContents(sourcePath As String, destinationPath As String) As FunctionResult
+    '    '         Get files And subdirectories from source path
+    '    '        Dim files As String() = Directory.GetFiles(sourcePath)
+    '    '        Dim directories As String() = Directory.GetDirectories(sourcePath)
+
+    '    '        Move files
+    '    '        For Each file In files
+    '    '            Dim fileName As String = Path.GetFileName(file)
+    '    '            Dim destFile As String = Path.Combine(destinationPath, fileName)
+    '    '            file.Move(file, destFile)
+    '    '        Next
+
+    '    '        Move directories recursively
+    '    '        For Each directory In directories
+    '    '            Dim dirName As String = New DirectoryInfo(directory).Name
+    '    '            Dim destDir As String = Path.Combine(destinationPath, dirName)
+    '    '            MoveFolderContents(directory, destDir)
+    '    '        Next
+
+    '    '        Delete original source directory if empty
+    '    '        If Directory.GetFiles(sourcePath).Length = 0 AndAlso Directory.GetDirectories(sourcePath).Length = 0 Then
+    '    '            Directory.Delete(sourcePath)
+    '    '        End If
+    '    '    End Sub
+    'End Function
+#End Region
 
 #Region "---- ENUMERATIONS -------------------------------------------------------------------------"
 
@@ -278,6 +436,25 @@ Public Module KnownFolders
         AliasOnly = &H80000000UL
     End Enum
 
+    Public Enum FunctionResult As UInteger
+        Success = 0
+        Failure = 1
+        NotFound = 2
+        InvalidInput = 3
+        AccessDenied = 4
+        Timeout = 5
+        AlreadyExists = 6
+        NotSupported = 7
+        NoDownloadFolder = 8
+        OnlineError = 9
+        MatchingFile = 10
+        HTTPError = 11
+        IOError = 12
+        IOException = 13
+        FileReadOnly = 14
+        OperationCanceled = 15
+        UnknownError = 99
+    End Enum
 
     ''' <summary>
     ''' Standard folders registered with the system. These folders are installed with
