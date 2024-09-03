@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>DaddyNino</RootNamespace>
+    <RootNamespace>DaddyNino.SpecialFolders</RootNamespace>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>Library for working with Windows Special Folders</Description>
     <Title>Library for working with Windows Special Folders</Title>
