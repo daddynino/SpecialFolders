@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>SpecialFolders</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
-    <Description>Library to retrieve special folders from Windows</Description>
+    <RootNamespace>DaddyNino</RootNamespace>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>Library for working with Windows Special Folders</Description>
+    <Title>Library for working with Windows Special Folders</Title>
+    <Version>0.0.1</Version>
+    <Authors>Neil Saunders</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
