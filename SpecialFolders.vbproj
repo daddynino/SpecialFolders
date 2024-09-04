@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>DaddyNino.SpecialFolders</RootNamespace>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Description>Library for working with Windows Special Folders</Description>
     <Title>Library for working with Windows Special Folders</Title>
     <Version>0.0.1</Version>
