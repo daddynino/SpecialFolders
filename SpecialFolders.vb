@@ -4,19 +4,24 @@ Imports System.Runtime.InteropServices
 
 Public Class PathNotFoundException
     Inherits ApplicationException
+
     Public Sub New(ByVal message As String)
         MyBase.New(message)
     End Sub
+
 End Class
+
 ''' <summary>
 ''' Class containing methods to retrieve specific file system paths.
 ''' </summary>
 Public Module KnownFolders
 
 #Region "---- MEMBERS ------------------------------------------------------------------------------"
+
 #End Region
 
 #Region "private static string[] _knownFolderGuids = new string[]"
+
     Private ReadOnly _knownFolderGuids As String() =
     {
         "{008CA0B1-55B4-4C56-B8A8-4DE4B299D3BE}",
@@ -114,19 +119,20 @@ Public Module KnownFolders
         "{491E922F-5643-4AF4-A7EB-4E7A138D8174}",
         "{F38BF404-1D43-42F2-9305-67DE0B28FC23}"
     }
+
 #End Region
 
 #Region "---- METHODS (PUBLIC) ---------------------------------------------------------------------"
 
-
     ''' <summary>
-    ''' Gets the current path to the specified known folder as currently configured. This does
-    ''' not require the folder to be existent.
+    ''' Gets the current path to the specified known folder as currently configured. This does not
+    ''' require the folder to be existent.
     ''' </summary>
-    ''' <param name="knownFolder">The known folder which current path will be returned.</param>
-    ''' <returns>The default path of the known folder.</returns>
-    ''' <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the path
-    '''     could not be retrieved.</exception>
+    ''' <param name="knownFolder"> The known folder which current path will be returned. </param>
+    ''' <returns> The default path of the known folder. </returns>
+    ''' <exception cref="System.Runtime.InteropServices.ExternalException">
+    ''' Thrown if the path could not be retrieved.
+    ''' </exception>
     Public Function GetPath(ByVal myKnownFolder As KnownFolder) As String
 
         Return GetPath(myKnownFolder, False)
@@ -134,15 +140,18 @@ Public Module KnownFolders
     End Function
 
     ''' <summary>
-    ''' Gets the current path to the specified known folder as currently configured. This does
-    ''' not require the folder to be existent.
+    ''' Gets the current path to the specified known folder as currently configured. This does not
+    ''' require the folder to be existent.
     ''' </summary>
-    ''' <param name="knownFolder">The known folder which current path will be returned.</param>
-    ''' <param name="defaultUser">Specifies if the paths of the default user (user profile
-    '''     template) will be used. This requires administrative rights.</param>
-    ''' <returns>The default path of the known folder.</returns>
-    ''' <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the path
-    '''     could not be retrieved.</exception>
+    ''' <param name="knownFolder"> The known folder which current path will be returned. </param>
+    ''' <param name="defaultUser">
+    ''' Specifies if the paths of the default user (user profile
+    ''' template) will be used. This requires administrative rights.
+    ''' </param>
+    ''' <returns> The default path of the known folder. </returns>
+    ''' <exception cref="System.Runtime.InteropServices.ExternalException">
+    ''' Thrown if the path could not be retrieved.
+    ''' </exception>
     Public Function GetPath(ByVal myKnownFolder As KnownFolder, ByVal defaultUser As Boolean) As String
 
         Return GetPath(myKnownFolder, KnownFolderFlags.DontVerify, defaultUser)
@@ -150,13 +159,14 @@ Public Module KnownFolders
     End Function
 
     ''' <summary>
-    ''' Gets the default path to the specified known folder. This does not require the folder
-    ''' to be existent.
+    ''' Gets the default path to the specified known folder. This does not require the folder to be
+    ''' existent.
     ''' </summary>
-    ''' <param name="knownFolder">The known folder which default path will be returned.</param>
-    ''' <returns>The current (and possibly redirected) path of the known folder.</returns>
-    ''' <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the path
-    '''     could not be retrieved.</exception>
+    ''' <param name="knownFolder"> The known folder which default path will be returned. </param>
+    ''' <returns> The current (and possibly redirected) path of the known folder. </returns>
+    ''' <exception cref="System.Runtime.InteropServices.ExternalException">
+    ''' Thrown if the path could not be retrieved.
+    ''' </exception>
     Public Function GetDefaultPath(ByVal myKnownFolder As KnownFolder) As String
 
         Return GetDefaultPath(myKnownFolder, False)
@@ -164,15 +174,18 @@ Public Module KnownFolders
     End Function
 
     ''' <summary>
-    ''' Gets the default path to the specified known folder. This does not require the folder
-    ''' to be existent.
+    ''' Gets the default path to the specified known folder. This does not require the folder to be
+    ''' existent.
     ''' </summary>
-    ''' <param name="knownFolder">The known folder which default path will be returned.</param>
-    ''' <param name="defaultUser">Specifies if the paths of the default user (user profile
-    '''     template) will be used. This requires administrative rights.</param>
-    ''' <returns>The current (and possibly redirected) path of the known folder.</returns>
-    ''' <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the path
-    '''     could not be retrieved.</exception>
+    ''' <param name="knownFolder"> The known folder which default path will be returned. </param>
+    ''' <param name="defaultUser">
+    ''' Specifies if the paths of the default user (user profile
+    ''' template) will be used. This requires administrative rights.
+    ''' </param>
+    ''' <returns> The current (and possibly redirected) path of the known folder. </returns>
+    ''' <exception cref="System.Runtime.InteropServices.ExternalException">
+    ''' Thrown if the path could not be retrieved.
+    ''' </exception>
     Public Function GetDefaultPath(ByVal myKnownFolder As KnownFolder, ByVal defaultUser As Boolean) As String
 
         Return GetPath(myKnownFolder, KnownFolderFlags.DefaultPath Or KnownFolderFlags.DontVerify,
@@ -183,10 +196,10 @@ Public Module KnownFolders
     ''' <summary>
     ''' Sets the path for a specified known folder.
     ''' </summary>
-    ''' <param name="myKnownFolder">The known folder to update.</param>
-    ''' <param name="DestinationFolder">The new path for the known folder.</param>
+    ''' <param name="myKnownFolder">     The known folder to update. </param>
+    ''' <param name="DestinationFolder"> The new path for the known folder. </param>
     ''' <returns>
-    ''' A <see cref="FunctionResult"/> indicating the success or failure of the operation.
+    ''' A <see cref="FunctionResult" /> indicating the success or failure of the operation.
     ''' </returns>
     ''' <remarks>
     ''' This method uses the SHSetKnownFolderPath API to update the location of a known folder.
@@ -213,11 +226,21 @@ Public Module KnownFolders
     ''' <summary>
     ''' Moves all files and subdirectories from the source folder to the destination folder.
     ''' </summary>
-    ''' <param name="SourceFolder">The full path of the folder from which files and directories will be moved.</param>
-    ''' <param name="DestFolder">The full path of the folder to which files and directories will be moved.</param>
-    ''' <returns>A <see cref="FunctionResult"/> value indicating the result of the operation.</returns>
-    ''' <exception cref="IOException">Thrown when an I/O error occurs during the operation.</exception>
-    ''' <exception cref="UnauthorizedAccessException">Thrown when the caller does not have the required permission.</exception>
+    ''' <param name="SourceFolder">
+    ''' The full path of the folder from which files and directories will be moved.
+    ''' </param>
+    ''' <param name="DestFolder">  
+    ''' The full path of the folder to which files and directories will be moved.
+    ''' </param>
+    ''' <returns>
+    ''' A <see cref="FunctionResult" /> value indicating the result of the operation.
+    ''' </returns>
+    ''' <exception cref="IOException">
+    ''' Thrown when an I/O error occurs during the operation.
+    ''' </exception>
+    ''' <exception cref="UnauthorizedAccessException">
+    ''' Thrown when the caller does not have the required permission.
+    ''' </exception>
     Public Function MoveAffectedFolderItems(ByVal SourceFolder As String, ByVal DestFolder As String) As FunctionResult
         ' Check if the source folder exists
         If Not Directory.Exists(SourceFolder) Then
@@ -256,9 +279,11 @@ Public Module KnownFolders
     ''' <summary>
     ''' Moves all files from the source folder to the destination folder.
     ''' </summary>
-    ''' <param name="SourceFolder">The full path of the source folder.</param>
-    ''' <param name="DestFolder">The full path of the destination folder.</param>
-    ''' <exception cref="IOException">Thrown when an I/O error occurs during the operation.</exception>
+    ''' <param name="SourceFolder"> The full path of the source folder. </param>
+    ''' <param name="DestFolder">   The full path of the destination folder. </param>
+    ''' <exception cref="IOException">
+    ''' Thrown when an I/O error occurs during the operation.
+    ''' </exception>
     Private Sub MoveFiles(ByVal SourceFolder As String, ByVal DestFolder As String)
         ' Get all files in the source folder
         Dim files As String() = Directory.GetFiles(SourceFolder)
@@ -273,9 +298,11 @@ Public Module KnownFolders
     ''' <summary>
     ''' Moves all subdirectories from the source folder to the destination folder.
     ''' </summary>
-    ''' <param name="SourceFolder">The full path of the source folder.</param>
-    ''' <param name="DestFolder">The full path of the destination folder.</param>
-    ''' <exception cref="IOException">Thrown when an I/O error occurs during the operation.</exception>
+    ''' <param name="SourceFolder"> The full path of the source folder. </param>
+    ''' <param name="DestFolder">   The full path of the destination folder. </param>
+    ''' <exception cref="IOException">
+    ''' Thrown when an I/O error occurs during the operation.
+    ''' </exception>
     Private Sub MoveDirectories(ByVal SourceFolder As String, ByVal DestFolder As String)
         ' Get all directories in the source folder
         Dim directories As String() = Directory.GetDirectories(SourceFolder)
@@ -288,13 +315,16 @@ Public Module KnownFolders
     End Sub
 
 #End Region
+
     ''' <summary>
     ''' Creates and initializes the known folder.
     ''' </summary>
-    ''' <param name="knownFolder">The known folder which will be initialized.</param>
-    ''' <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the known
-    '''     folder could not be initialized.</exception>
+    ''' <param name="knownFolder"> The known folder which will be initialized. </param>
+    ''' <exception cref="System.Runtime.InteropServices.ExternalException">
+    ''' Thrown if the known folder could not be initialized.
+    ''' </exception>
 #Disable Warning IDE0051 ' Remove unused private members
+
     Private Sub Initialize(ByVal myKnownFolder As KnownFolder)
 #Enable Warning IDE0051 ' Remove unused private members
 
@@ -305,11 +335,14 @@ Public Module KnownFolders
     ''' <summary>
     ''' Creates and initializes the known folder.
     ''' </summary>
-    ''' <param name="knownFolder">The known folder which will be initialized.</param>
-    ''' <param name="defaultUser">Specifies if the paths of the default user (user profile
-    '''     template) will be used. This requires administrative rights.</param>
-    ''' <exception cref="System.Runtime.InteropServices.ExternalException">Thrown if the known
-    '''     folder could not be initialized.</exception>
+    ''' <param name="knownFolder"> The known folder which will be initialized. </param>
+    ''' <param name="defaultUser">
+    ''' Specifies if the paths of the default user (user profile
+    ''' template) will be used. This requires administrative rights.
+    ''' </param>
+    ''' <exception cref="System.Runtime.InteropServices.ExternalException">
+    ''' Thrown if the known folder could not be initialized.
+    ''' </exception>
     Private Sub Initialize(ByVal myKnownFolder As KnownFolder, ByVal defaultUser As Boolean)
 
         GetPath(myKnownFolder, (KnownFolderFlags.Create Or KnownFolderFlags.Init), defaultUser)
@@ -318,20 +351,22 @@ Public Module KnownFolders
 
 #Region "---- METHODS (PRIVATE) --------------------------------------------------------------------"
 
-
     Public ExternalException As New Exception
 
 #Disable Warning IDE0060 ' Remove unused parameter
+
     ''' <summary>
     ''' Retrieves the path for a specified known folder.
     ''' </summary>
-    ''' <param name="myKnownFolder">The known folder to retrieve the path for.</param>
-    ''' <param name="flags">Options that specify special retrieval options.</param>
-    ''' <param name="defaultUser">Indicates whether to retrieve the path for the default user or the current user.</param>
-    ''' <returns>The path of the specified known folder as a <see cref="String"/>.</returns>
+    ''' <param name="myKnownFolder"> The known folder to retrieve the path for. </param>
+    ''' <param name="flags">         Options that specify special retrieval options. </param>
+    ''' <param name="defaultUser">  
+    ''' Indicates whether to retrieve the path for the default user or the current user.
+    ''' </param>
+    ''' <returns> The path of the specified known folder as a <see cref="String" />. </returns>
     ''' <exception cref="PathNotFoundException">
-    ''' Thrown when the known folder path cannot be retrieved, 
-    ''' typically because the folder is not available on this system.
+    ''' Thrown when the known folder path cannot be retrieved, typically because the folder is not
+    ''' available on this system.
     ''' </exception>
     ''' <remarks>
     ''' This method uses the SHGetKnownFolderPath API to retrieve the path of a known folder.
@@ -358,22 +393,27 @@ Public Module KnownFolders
     ''' <summary>
     ''' Retrieves the full path of a known folder identified by the folder's KnownFolderID.
     ''' </summary>
-    ''' <param name="rfid">A KnownFolderID that identifies the folder.</param>
-    ''' <param name="dwFlags">Flags that specify special retrieval options. This value can be
-    '''     0; otherwise, one or more of the KnownFolderFlag values.</param>
-    ''' <param name="hToken">An access token that represents a particular user. If this
-    '''     parameter is NULL, which is the most common usage, the function requests the known
-    '''     folder for the current user. Assigning a value of -1 indicates the Default User.
-    '''     The default user profile is duplicated when any new user account is created.
-    '''     Note that access to the Default User folders requires administrator privileges.
-    '''     </param>
-    ''' <param name="ppszPath">When this method returns, contains the address of a string that
-    '''     specifies the path of the known folder. The returned path does not include a
-    '''     trailing backslash.</param>
-    ''' <returns>Returns S_OK if successful, or an error value otherwise.</returns>
+    ''' <param name="rfid">     A KnownFolderID that identifies the folder. </param>
+    ''' <param name="dwFlags"> 
+    ''' Flags that specify special retrieval options. This value can be 0; otherwise, one or more of
+    ''' the KnownFolderFlag values.
+    ''' </param>
+    ''' <param name="hToken">  
+    ''' An access token that represents a particular user. If this parameter is NULL, which is the
+    ''' most common usage, the function requests the known folder for the current user. Assigning a
+    ''' value of -1 indicates the Default User. The default user profile is duplicated when any new
+    ''' user account is created. Note that access to the Default User folders requires administrator
+    ''' privileges.
+    ''' </param>
+    ''' <param name="ppszPath">
+    ''' When this method returns, contains the address of a string that specifies the path of the
+    ''' known folder. The returned path does not include a trailing backslash.
+    ''' </param>
+    ''' <returns> Returns S_OK if successful, or an error value otherwise. </returns>
     Declare Auto Function SHGetKnownFolderPath Lib "Shell32.dll" (
         ByVal rfid As Guid, ByVal dwFlags As UInteger, ByVal hToken As IntPtr,
         ByRef pszPath As String) As Integer
+
     <DllImport("shell32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
     Friend Function SHGetKnownFolderPath(
         <MarshalAs(UnmanagedType.LPStruct)> ByVal rfid As Guid,
@@ -397,19 +437,13 @@ Public Module KnownFolders
     '    '        Dim files As String() = Directory.GetFiles(sourcePath)
     '    '        Dim directories As String() = Directory.GetDirectories(sourcePath)
 
-    '    '        Move files
-    '    '        For Each file In files
-    '    '            Dim fileName As String = Path.GetFileName(file)
-    '    '            Dim destFile As String = Path.Combine(destinationPath, fileName)
-    '    '            file.Move(file, destFile)
-    '    '        Next
+    ' ' Move files ' For Each file In files ' Dim fileName As String = Path.GetFileName(file) ' Dim
+    ' destFile As String = Path.Combine(destinationPath, fileName) ' file.Move(file, destFile) '
+    ' Next
 
-    '    '        Move directories recursively
-    '    '        For Each directory In directories
-    '    '            Dim dirName As String = New DirectoryInfo(directory).Name
-    '    '            Dim destDir As String = Path.Combine(destinationPath, dirName)
-    '    '            MoveFolderContents(directory, destDir)
-    '    '        Next
+    ' ' Move directories recursively ' For Each directory In directories ' Dim dirName As String =
+    ' New DirectoryInfo(directory).Name ' Dim destDir As String = Path.Combine(destinationPath,
+    ' dirName) ' MoveFolderContents(directory, destDir) ' Next
 
     '    '        Delete original source directory if empty
     '    '        If Directory.GetFiles(sourcePath).Length = 0 AndAlso Directory.GetDirectories(sourcePath).Length = 0 Then
@@ -417,10 +451,10 @@ Public Module KnownFolders
     '    '        End If
     '    '    End Sub
     'End Function
+
 #End Region
 
 #Region "---- ENUMERATIONS -------------------------------------------------------------------------"
-
 
     '[flags]()
     Private Enum KnownFolderFlags As UInteger
@@ -457,596 +491,560 @@ Public Module KnownFolders
     End Enum
 
     ''' <summary>
-    ''' Standard folders registered with the system. These folders are installed with
-    ''' Windows Vista and later operating systems, and a computer will have only folders
-    ''' appropriate to it installed.
+    ''' Standard folders registered with the system. These folders are installed with Windows Vista
+    ''' and later operating systems, and a computer will have only folders appropriate to it
+    ''' installed.
     ''' </summary>
     Public Enum KnownFolder
+
         ''' <summary>
-        ''' The per-user Account Pictures folder. Introduced in Windows 8.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\AccountPictures&quot;.
+        ''' The per-user Account Pictures folder. Introduced in Windows 8. Defaults to
+        ''' "%APPDATA%\Microsoft\Windows\AccountPictures".
         ''' </summary>
         AccountPictures
 
         ''' <summary>
-        ''' The per-user Administrative Tools folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Start Menu\Programs\Administrative Tools&quot;.
+        ''' The per-user Administrative Tools folder. Defaults to "%APPDATA%\Microsoft\Windows\Start
+        ''' Menu\Programs\Administrative Tools".
         ''' </summary>
         AdminTools
 
         ''' <summary>
-        ''' The per-user Application Shortcuts folder. Introduced in Windows 8.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\Application Shortcuts&quot;.
+        ''' The per-user Application Shortcuts folder. Introduced in Windows 8. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\Application Shortcuts".
         ''' </summary>
         ApplicationShortcuts
 
         ''' <summary>
-        ''' The per-user Camera Roll folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;.%USERPROFILE%\Pictures\Camera Roll&quot;.
+        ''' The per-user Camera Roll folder. Introduced in Windows 8.1. Defaults to
+        ''' ".%USERPROFILE%\Pictures\Camera Roll".
         ''' </summary>
         CameraRoll
 
         ''' <summary>
-        ''' The per-user Temporary Burn Folder.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\Burn\Burn&quot;.
+        ''' The per-user Temporary Burn Folder. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\Burn\Burn".
         ''' </summary>
         CDBurning
 
         ''' <summary>
-        ''' The common Administrative Tools folder.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Administrative Tools&quot;.
+        ''' The common Administrative Tools folder. Defaults to
+        ''' "%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Administrative Tools".
         ''' </summary>
         CommonAdminTools
 
         ''' <summary>
-        ''' The common OEM Links folder.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\OEM Links&quot;.
+        ''' The common OEM Links folder. Defaults to "%ALLUSERSPROFILE%\OEM Links".
         ''' </summary>
         CommonOemLinks
 
         ''' <summary>
-        ''' The common Programs folder.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs&quot;.
+        ''' The common Programs folder. Defaults to "%ALLUSERSPROFILE%\Microsoft\Windows\Start
+        ''' Menu\Programs".
         ''' </summary>
         CommonPrograms
 
         ''' <summary>
-        ''' The common Start Menu folder.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu&quot;.
+        ''' The common Start Menu folder. Defaults to "%ALLUSERSPROFILE%\Microsoft\Windows\Start
+        ''' Menu".
         ''' </summary>
         CommonStartMenu
 
         ''' <summary>
-        ''' The common Startup folder.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\StartUp&quot;.
+        ''' The common Startup folder. Defaults to "%ALLUSERSPROFILE%\Microsoft\Windows\Start
+        ''' Menu\Programs\StartUp".
         ''' </summary>
         CommonStartup
 
         ''' <summary>
-        ''' The common Templates folder.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Templates&quot;.
+        ''' The common Templates folder. Defaults to
+        ''' "%ALLUSERSPROFILE%\Microsoft\Windows\Templates".
         ''' </summary>
         CommonTemplates
 
         ''' <summary>
-        ''' The per-user Contacts folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%USERPROFILE%\Contacts&quot;.
+        ''' The per-user Contacts folder. Introduced in Windows Vista. Defaults to
+        ''' "%USERPROFILE%\Contacts".
         ''' </summary>
         Contacts
 
         ''' <summary>
-        ''' The per-user Cookies folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Cookies&quot;.
+        ''' The per-user Cookies folder. Defaults to "%APPDATA%\Microsoft\Windows\Cookies".
         ''' </summary>
         Cookies
 
         ''' <summary>
-        ''' The per-user Desktop folder.
-        ''' Defaults to &quot;%USERPROFILE%\Desktop&quot;.
+        ''' The per-user Desktop folder. Defaults to "%USERPROFILE%\Desktop".
         ''' </summary>
         Desktop
 
         ''' <summary>
-        ''' The common DeviceMetadataStore folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\DeviceMetadataStore&quot;.
+        ''' The common DeviceMetadataStore folder. Introduced in Windows 7. Defaults to
+        ''' "%ALLUSERSPROFILE%\Microsoft\Windows\DeviceMetadataStore".
         ''' </summary>
         DeviceMetadataStore
 
         ''' <summary>
-        ''' The per-user Documents folder.
-        ''' Defaults to &quot;%USERPROFILE%\Documents&quot;.
+        ''' The per-user Documents folder. Defaults to "%USERPROFILE%\Documents".
         ''' </summary>
         Documents
 
         ''' <summary>
-        ''' The per-user Documents library. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Libraries\Documents.library-ms&quot;.
+        ''' The per-user Documents library. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Windows\Libraries\Documents.library-ms".
         ''' </summary>
         DocumentsLibrary
 
         ''' <summary>
-        ''' The per-user Downloads folder.
-        ''' Defaults to &quot;%USERPROFILE%\Downloads&quot;.
+        ''' The per-user Downloads folder. Defaults to "%USERPROFILE%\Downloads".
         ''' </summary>
         Downloads
 
         ''' <summary>
-        ''' The per-user Favorites folder.
-        ''' Defaults to &quot;%USERPROFILE%\Favorites&quot;.
+        ''' The per-user Favorites folder. Defaults to "%USERPROFILE%\Favorites".
         ''' </summary>
         Favorites
 
         ''' <summary>
-        ''' The fixed Fonts folder.
-        ''' Points to &quot;%WINDIR%\Fonts&quot;.
+        ''' The fixed Fonts folder. Points to "%WINDIR%\Fonts".
         ''' </summary>
         Fonts
 
         ''' <summary>
-        ''' The per-user GameExplorer folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\GameExplorer&quot;.
+        ''' The per-user GameExplorer folder. Introduced in Windows Vista. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\GameExplorer".
         ''' </summary>
         GameTasks
 
         ''' <summary>
-        ''' The per-user History folder.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\History&quot;.
+        ''' The per-user History folder. Defaults to "%LOCALAPPDATA%\Microsoft\Windows\History".
         ''' </summary>
         History
 
         ''' <summary>
-        ''' The per-user ImplicitAppShortcuts folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\ImplicitAppShortcuts&quot;.
+        ''' The per-user ImplicitAppShortcuts folder. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\ImplicitAppShortcuts".
         ''' </summary>
         ImplicitAppShortcuts
 
         ''' <summary>
-        ''' The per-user Temporary Internet Files folder.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\Temporary Internet Files&quot;.
+        ''' The per-user Temporary Internet Files folder. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\Temporary Internet Files".
         ''' </summary>
         InternetCache
 
         ''' <summary>
-        ''' The per-user Libraries folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Libraries&quot;.
+        ''' The per-user Libraries folder. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Windows\Libraries".
         ''' </summary>
         Libraries
 
         ''' <summary>
-        ''' The per-user Links folder.
-        ''' Defaults to &quot;%USERPROFILE%\Links&quot;.
+        ''' The per-user Links folder. Defaults to "%USERPROFILE%\Links".
         ''' </summary>
         Links
 
         ''' <summary>
-        ''' The per-user Local folder.
-        ''' Defaults to &quot;%LOCALAPPDATA%&quot; (&quot;%USERPROFILE%\AppData\Local&quot;)&quot;.
+        ''' The per-user Local folder. Defaults to "%LOCALAPPDATA%"
+        ''' ("%USERPROFILE%\AppData\Local")".
         ''' </summary>
         LocalAppData
 
         ''' <summary>
-        ''' The per-user LocalLow folder.
-        ''' Defaults to &quot;%USERPROFILE%\AppData\LocalLow&quot;.
+        ''' The per-user LocalLow folder. Defaults to "%USERPROFILE%\AppData\LocalLow".
         ''' </summary>
         LocalAppDataLow
 
         ''' <summary>
-        ''' The fixed LocalizedResourcesDir folder.
-        ''' Points to &quot;%WINDIR%\resources\0409&quot; (code page).
+        ''' The fixed LocalizedResourcesDir folder. Points to "%WINDIR%\resources\0409" (code page).
         ''' </summary>
         LocalizedResourcesDir
 
         ''' <summary>
-        ''' The per-user Music folder.
-        ''' Defaults to &quot;%USERPROFILE%\Music&quot;.
+        ''' The per-user Music folder. Defaults to "%USERPROFILE%\Music".
         ''' </summary>
         Music
 
         ''' <summary>
-        ''' The per-user Music library. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Libraries\Music.library-ms&quot;.
+        ''' The per-user Music library. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Windows\Libraries\Music.library-ms".
         ''' </summary>
         MusicLibrary
 
         ''' <summary>
-        ''' The per-user Network Shortcuts folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Network Shortcuts&quot;.
+        ''' The per-user Network Shortcuts folder. Defaults to "%APPDATA%\Microsoft\Windows\Network
+        ''' Shortcuts".
         ''' </summary>
         NetHood
 
         ''' <summary>
-        ''' The per-user Original Images folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows Photo Gallery\Original Images&quot;.
+        ''' The per-user Original Images folder. Introduced in Windows Vista. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows Photo Gallery\Original Images".
         ''' </summary>
         OriginalImages
 
         ''' <summary>
-        ''' The per-user Slide Shows folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%USERPROFILE%\Pictures\Slide Shows&quot;.
+        ''' The per-user Slide Shows folder. Introduced in Windows Vista. Defaults to
+        ''' "%USERPROFILE%\Pictures\Slide Shows".
         ''' </summary>
         PhotoAlbums
 
         ''' <summary>
-        ''' The per-user Pictures library. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Libraries\Pictures.library-ms&quot;.
+        ''' The per-user Pictures library. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Windows\Libraries\Pictures.library-ms".
         ''' </summary>
         PicturesLibrary
 
         ''' <summary>
-        ''' The per-user Pictures folder.
-        ''' Defaults to &quot;%USERPROFILE%\Pictures&quot;.
+        ''' The per-user Pictures folder. Defaults to "%USERPROFILE%\Pictures".
         ''' </summary>
         Pictures
 
         ''' <summary>
-        ''' The per-user Playlists folder.
-        ''' Defaults to &quot;%USERPROFILE%\Music\Playlists&quot;.
+        ''' The per-user Playlists folder. Defaults to "%USERPROFILE%\Music\Playlists".
         ''' </summary>
         Playlists
 
         ''' <summary>
-        ''' The per-user Printer Shortcuts folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Printer Shortcuts&quot;.
+        ''' The per-user Printer Shortcuts folder. Defaults to "%APPDATA%\Microsoft\Windows\Printer
+        ''' Shortcuts".
         ''' </summary>
         PrintHood
 
         ''' <summary>
-        ''' The fixed user profile folder.
-        ''' Defaults to &quot;%USERPROFILE%&quot; (&quot;%SYSTEMDRIVE%\USERS\%USERNAME%&quot;)&quot;.
+        ''' The fixed user profile folder. Defaults to "%USERPROFILE%"
+        ''' ("%SYSTEMDRIVE%\USERS\%USERNAME%")".
         ''' </summary>
         Profile
 
         ''' <summary>
-        ''' The fixed ProgramData folder.
-        ''' Points to &quot;%ALLUSERSPROFILE%&quot; (&quot;%PROGRAMDATA%&quot;,
-        ''' &quot;%SYSTEMDRIVE%\ProgramData&quot;).
+        ''' The fixed ProgramData folder. Points to "%ALLUSERSPROFILE%" ("%PROGRAMDATA%",
+        ''' "%SYSTEMDRIVE%\ProgramData").
         ''' </summary>
         ProgramData
 
         ''' <summary>
-        ''' The fixed Program Files folder.
-        ''' This is the same as the ProgramFilesX86 known folder in 32-bit applications or the
-        ''' ProgramFilesX64 known folder in 64-bit applications.
-        ''' Points to %SYSTEMDRIVE%\Program Files on a 32-bit operating system or in 64-bit
-        ''' applications on a 64-bit operating system and to %SYSTEMDRIVE%\Program Files (x86) in
-        ''' 32-bit applications on a 64-bit operating system.
+        ''' The fixed Program Files folder. This is the same as the ProgramFilesX86 known folder in
+        ''' 32-bit applications or the ProgramFilesX64 known folder in 64-bit applications. Points
+        ''' to %SYSTEMDRIVE%\Program Files on a 32-bit operating system or in 64-bit applications on
+        ''' a 64-bit operating system and to %SYSTEMDRIVE%\Program Files (x86) in 32-bit
+        ''' applications on a 64-bit operating system.
         ''' </summary>
         ProgramFiles
 
         ''' <summary>
-        ''' The fixed Program Files folder (64-bit forced).
-        ''' This known folder is unsupported in 32-bit applications.
-        ''' Points to %SYSTEMDRIVE%\Program Files.
+        ''' The fixed Program Files folder (64-bit forced). This known folder is unsupported in
+        ''' 32-bit applications. Points to %SYSTEMDRIVE%\Program Files.
         ''' </summary>
         ProgramFilesX64
 
         ''' <summary>
-        ''' The fixed Program Files folder (32-bit forced).
-        ''' This is the same as the ProgramFiles known folder in 32-bit applications.
-        ''' Points to &quot;%SYSTEMDRIVE%\Program Files&quot; on a 32-bit operating system and to
-        ''' &quot;%SYSTEMDRIVE%\Program Files (x86)&quot; on a 64-bit operating system.
+        ''' The fixed Program Files folder (32-bit forced). This is the same as the ProgramFiles
+        ''' known folder in 32-bit applications. Points to "%SYSTEMDRIVE%\Program Files" on a 32-bit
+        ''' operating system and to "%SYSTEMDRIVE%\Program Files (x86)" on a 64-bit operating
+        ''' system.
         ''' </summary>
         ProgramFilesX86
 
         ''' <summary>
-        ''' The fixed Common Files folder.
-        ''' This is the same as the ProgramFilesCommonX86 known folder in 32-bit applications or
-        ''' the ProgramFilesCommonX64 known folder in 64-bit applications.
-        ''' Points to&quot; %PROGRAMFILES%\Common Files&quot; on a 32-bit operating system or in
-        ''' 64-bit applications on a 64-bit operating system and to
-        ''' &quot;%PROGRAMFILES(X86)%\Common Files&quot; in 32-bit applications on a 64-bit
-        ''' operating system.
+        ''' The fixed Common Files folder. This is the same as the ProgramFilesCommonX86 known
+        ''' folder in 32-bit applications or the ProgramFilesCommonX64 known folder in 64-bit
+        ''' applications. Points to" %PROGRAMFILES%\Common Files" on a 32-bit operating system or in
+        ''' 64-bit applications on a 64-bit operating system and to "%PROGRAMFILES(X86)%\Common
+        ''' Files" in 32-bit applications on a 64-bit operating system.
         ''' </summary>
         ProgramFilesCommon
 
         ''' <summary>
-        ''' The fixed Common Files folder (64-bit forced).
-        ''' This known folder is unsupported in 32-bit applications.
-        ''' Points to &quot;%PROGRAMFILES%\Common Files&quot;.
+        ''' The fixed Common Files folder (64-bit forced). This known folder is unsupported in
+        ''' 32-bit applications. Points to "%PROGRAMFILES%\Common Files".
         ''' </summary>
         ProgramFilesCommonX64
 
         ''' <summary>
-        ''' The fixed Common Files folder (32-bit forced).
-        ''' This is the same as the ProgramFilesCommon known folder in 32-bit applications.
-        ''' Points to &quot;%PROGRAMFILES%\Common Files&quot; on a 32-bit operating system and to
-        ''' &quot;%PROGRAMFILES(X86)%\Common Files&quot; on a 64-bit operating system.
+        ''' The fixed Common Files folder (32-bit forced). This is the same as the
+        ''' ProgramFilesCommon known folder in 32-bit applications. Points to "%PROGRAMFILES%\Common
+        ''' Files" on a 32-bit operating system and to "%PROGRAMFILES(X86)%\Common Files" on a
+        ''' 64-bit operating system.
         ''' </summary>
         ProgramFilesCommonX86
 
         ''' <summary>
-        ''' The per-user Programs folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Start Menu\Programs&quot;.
+        ''' The per-user Programs folder. Defaults to "%APPDATA%\Microsoft\Windows\Start
+        ''' Menu\Programs".
         ''' </summary>
         Programs
 
         ''' <summary>
-        ''' The fixed Public folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%PUBLIC%&quot; (&quot;%SYSTEMDRIVE%\Users\Public)&quot;.
+        ''' The fixed Public folder. Introduced in Windows Vista. Defaults to "%PUBLIC%"
+        ''' ("%SYSTEMDRIVE%\Users\Public)".
         ''' </summary>
         [Public]
 
         ''' <summary>
-        ''' The common Public Desktop folder.
-        ''' Defaults to &quot;%PUBLIC%\Desktop&quot;.
+        ''' The common Public Desktop folder. Defaults to "%PUBLIC%\Desktop".
         ''' </summary>
         PublicDesktop
 
         ''' <summary>
-        ''' The common Public Documents folder.
-        ''' Defaults to &quot;%PUBLIC%\Documents&quot;.
+        ''' The common Public Documents folder. Defaults to "%PUBLIC%\Documents".
         ''' </summary>
         PublicDocuments
 
         ''' <summary>
-        ''' The common Public Downloads folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%PUBLIC%\Downloads&quot;.
+        ''' The common Public Downloads folder. Introduced in Windows Vista. Defaults to
+        ''' "%PUBLIC%\Downloads".
         ''' </summary>
         PublicDownloads
 
         ''' <summary>
-        ''' The common GameExplorer folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\GameExplorer&quot;.
+        ''' The common GameExplorer folder. Introduced in Windows Vista. Defaults to
+        ''' "%ALLUSERSPROFILE%\Microsoft\Windows\GameExplorer".
         ''' </summary>
         PublicGameTasks
 
         ''' <summary>
-        ''' The common Libraries folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Libraries&quot;.
+        ''' The common Libraries folder. Introduced in Windows 7. Defaults to
+        ''' "%ALLUSERSPROFILE%\Microsoft\Windows\Libraries".
         ''' </summary>
         PublicLibraries
 
         ''' <summary>
-        ''' The common Public Music folder.
-        ''' Defaults to &quot;%PUBLIC%\Music&quot;.
+        ''' The common Public Music folder. Defaults to "%PUBLIC%\Music".
         ''' </summary>
         PublicMusic
 
         ''' <summary>
-        ''' The common Public Pictures folder.
-        ''' Defaults to &quot;%PUBLIC%\Pictures&quot;.
+        ''' The common Public Pictures folder. Defaults to "%PUBLIC%\Pictures".
         ''' </summary>
         PublicPictures
 
         ''' <summary>
-        ''' The common Ringtones folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%ALLUSERSPROFILE%\Microsoft\Windows\Ringtones&quot;.
+        ''' The common Ringtones folder. Introduced in Windows 7. Defaults to
+        ''' "%ALLUSERSPROFILE%\Microsoft\Windows\Ringtones".
         ''' </summary>
         PublicRingtones
 
         ''' <summary>
-        ''' The common Public Account Pictures folder. Introduced in Windows 8.
-        ''' Defaults to &quot;%PUBLIC%\AccountPictures&quot;.
+        ''' The common Public Account Pictures folder. Introduced in Windows 8. Defaults to
+        ''' "%PUBLIC%\AccountPictures".
         ''' </summary>
         PublicUserTiles
 
         ''' <summary>
-        ''' The common Public Videos folder.
-        ''' Defaults to &quot;%PUBLIC%\Videos&quot;.
+        ''' The common Public Videos folder. Defaults to "%PUBLIC%\Videos".
         ''' </summary>
         PublicVideos
 
         ''' <summary>
-        ''' The per-user Quick Launch folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Internet Explorer\Quick Launch&quot;.
+        ''' The per-user Quick Launch folder. Defaults to "%APPDATA%\Microsoft\Internet
+        ''' Explorer\Quick Launch".
         ''' </summary>
         QuickLaunch
 
         ''' <summary>
-        ''' The per-user Recent Items folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Recent&quot;.
+        ''' The per-user Recent Items folder. Defaults to "%APPDATA%\Microsoft\Windows\Recent".
         ''' </summary>
         Recent
 
         ''' <summary>
-        ''' The common Recorded TV library. Introduced in Windows 7.
-        ''' Defaults to &quot;%PUBLIC%\RecordedTV.library-ms&quot;.
+        ''' The common Recorded TV library. Introduced in Windows 7. Defaults to
+        ''' "%PUBLIC%\RecordedTV.library-ms".
         ''' </summary>
         RecordedTVLibrary
 
         ''' <summary>
-        ''' The fixed Resources folder.
-        ''' Points to &quot;%WINDIR%\Resources&quot;.
+        ''' The fixed Resources folder. Points to "%WINDIR%\Resources".
         ''' </summary>
         ResourceDir
 
         ''' <summary>
-        ''' The per-user Ringtones folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\Ringtones&quot;.
+        ''' The per-user Ringtones folder. Introduced in Windows 7. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\Ringtones".
         ''' </summary>
         Ringtones
 
         ''' <summary>
-        ''' The per-user Roaming folder.
-        ''' Defaults to &quot;%APPDATA%&quot; (&quot;%USERPROFILE%\AppData\Roaming&quot;).
+        ''' The per-user Roaming folder. Defaults to "%APPDATA%" ("%USERPROFILE%\AppData\Roaming").
         ''' </summary>
         RoamingAppData
 
         ''' <summary>
-        ''' The per-user RoamedTileImages folder. Introduced in Windows 8.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\RoamedTileImages&quot;.
+        ''' The per-user RoamedTileImages folder. Introduced in Windows 8. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\RoamedTileImages".
         ''' </summary>
         RoamedTileImages
 
         ''' <summary>
-        ''' The per-user RoamingTiles folder. Introduced in Windows 8.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\RoamingTiles&quot;.
+        ''' The per-user RoamingTiles folder. Introduced in Windows 8. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\RoamingTiles".
         ''' </summary>
         RoamingTiles
 
         ''' <summary>
-        ''' The common Sample Music folder.
-        ''' Defaults to &quot;%PUBLIC%\Music\Sample Music&quot;.
+        ''' The common Sample Music folder. Defaults to "%PUBLIC%\Music\Sample Music".
         ''' </summary>
         SampleMusic
 
         ''' <summary>
-        ''' The common Sample Pictures folder.
-        ''' Defaults to &quot;%PUBLIC%\Pictures\Sample Pictures&quot;.
+        ''' The common Sample Pictures folder. Defaults to "%PUBLIC%\Pictures\Sample Pictures".
         ''' </summary>
         SamplePictures
 
         ''' <summary>
-        ''' The common Sample Playlists folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%PUBLIC%\Music\Sample Playlists&quot;.
+        ''' The common Sample Playlists folder. Introduced in Windows Vista. Defaults to
+        ''' "%PUBLIC%\Music\Sample Playlists".
         ''' </summary>
         SamplePlaylists
 
         ''' <summary>
-        ''' The common Sample Videos folder.
-        ''' Defaults to &quot;%PUBLIC%\Videos\Sample Videos&quot;.
+        ''' The common Sample Videos folder. Defaults to "%PUBLIC%\Videos\Sample Videos".
         ''' </summary>
         SampleVideos
 
         ''' <summary>
-        ''' The per-user Saved Games folder. Introduced in Windows Vista.
-        ''' Defaults to &quot;%USERPROFILE%\Saved Games&quot;.
+        ''' The per-user Saved Games folder. Introduced in Windows Vista. Defaults to
+        ''' "%USERPROFILE%\Saved Games".
         ''' </summary>
         SavedGames
 
         ''' <summary>
-        ''' The per-user Searches folder.
-        ''' Defaults to &quot;%USERPROFILE%\Searches&quot;.
+        ''' The per-user Searches folder. Defaults to "%USERPROFILE%\Searches".
         ''' </summary>
         SavedSearches
 
         ''' <summary>
-        ''' The per-user Screenshots folder. Introduced in Windows 8.
-        ''' Defaults to &quot;%USERPROFILE%\Pictures\Screenshots&quot;.
+        ''' The per-user Screenshots folder. Introduced in Windows 8. Defaults to
+        ''' "%USERPROFILE%\Pictures\Screenshots".
         ''' </summary>
         Screenshots
 
         ''' <summary>
-        ''' The per-user History folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\ConnectedSearch\History&quot;.
+        ''' The per-user History folder. Introduced in Windows 8.1. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\ConnectedSearch\History".
         ''' </summary>
         SearchHistory
 
         ''' <summary>
-        ''' The per-user Templates folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows\ConnectedSearch\Templates&quot;.
+        ''' The per-user Templates folder. Introduced in Windows 8.1. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows\ConnectedSearch\Templates".
         ''' </summary>
         SearchTemplates
 
         ''' <summary>
-        ''' The per-user SendTo folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\SendTo&quot;.
+        ''' The per-user SendTo folder. Defaults to "%APPDATA%\Microsoft\Windows\SendTo".
         ''' </summary>
         SendTo
 
         ''' <summary>
-        ''' The common Gadgets folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%ProgramFiles%\Windows Sidebar\Gadgets&quot;.
+        ''' The common Gadgets folder. Introduced in Windows 7. Defaults to "%ProgramFiles%\Windows
+        ''' Sidebar\Gadgets".
         ''' </summary>
         SidebarDefaultParts
 
         ''' <summary>
-        ''' The per-user Gadgets folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Microsoft\Windows Sidebar\Gadgets&quot;.
+        ''' The per-user Gadgets folder. Introduced in Windows 7. Defaults to
+        ''' "%LOCALAPPDATA%\Microsoft\Windows Sidebar\Gadgets".
         ''' </summary>
         SidebarParts
 
         ''' <summary>
-        ''' The per-user OneDrive folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;%USERPROFILE%\OneDrive&quot;.
+        ''' The per-user OneDrive folder. Introduced in Windows 8.1. Defaults to
+        ''' "%USERPROFILE%\OneDrive".
         ''' </summary>
         SkyDrive
 
         ''' <summary>
-        ''' The per-user OneDrive Camera Roll folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;%USERPROFILE%\OneDrive\Pictures\Camera Roll&quot;.
+        ''' The per-user OneDrive Camera Roll folder. Introduced in Windows 8.1. Defaults to
+        ''' "%USERPROFILE%\OneDrive\Pictures\Camera Roll".
         ''' </summary>
         SkyDriveCameraRoll
 
         ''' <summary>
-        ''' The per-user OneDrive Documents folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;%USERPROFILE%\OneDrive\Documents&quot;.
+        ''' The per-user OneDrive Documents folder. Introduced in Windows 8.1. Defaults to
+        ''' "%USERPROFILE%\OneDrive\Documents".
         ''' </summary>
         SkyDriveDocuments
 
         ''' <summary>
-        ''' The per-user OneDrive Pictures folder. Introduced in Windows 8.1.
-        ''' Defaults to &quot;%USERPROFILE%\OneDrive\Pictures&quot;.
+        ''' The per-user OneDrive Pictures folder. Introduced in Windows 8.1. Defaults to
+        ''' "%USERPROFILE%\OneDrive\Pictures".
         ''' </summary>
         SkyDrivePictures
 
         ''' <summary>
-        ''' The per-user Start Menu folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Start Menu&quot;.
+        ''' The per-user Start Menu folder. Defaults to "%APPDATA%\Microsoft\Windows\Start Menu".
         ''' </summary>
         StartMenu
 
         ''' <summary>
-        ''' The per-user Startup folder.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Start Menu\Programs\StartUp&quot;.
+        ''' The per-user Startup folder. Defaults to "%APPDATA%\Microsoft\Windows\Start
+        ''' Menu\Programs\StartUp".
         ''' </summary>
         Startup
 
         ''' <summary>
-        ''' The fixed System32 folder.
-        ''' This is the same as the SystemX86 known folder in 32-bit applications.
-        ''' Points to &quot;%WINDIR%\system32&quot; on 32-bit operating systems or in 64-bit
-        ''' applications on a 64-bit operating system and to &quot;%WINDIR%\syswow64&quot; in
-        ''' 32-bit applications on a 64-bit operating system.
+        ''' The fixed System32 folder. This is the same as the SystemX86 known folder in 32-bit
+        ''' applications. Points to "%WINDIR%\system32" on 32-bit operating systems or in 64-bit
+        ''' applications on a 64-bit operating system and to "%WINDIR%\syswow64" in 32-bit
+        ''' applications on a 64-bit operating system.
         ''' </summary>
         System
 
         ''' <summary>
-        ''' The fixed System32 folder (32-bit forced).
-        ''' This is the same as the System known folder in 32-bit applications.
-        ''' Points to &quot;%WINDIR%\syswow64&quot; in 64-bit applications or in 32-bit
-        ''' applications on a 64-bit operating system and to &quot;%WINDIR%\system32&quot; on
-        ''' 32-bit operating system
+        ''' The fixed System32 folder (32-bit forced). This is the same as the System known folder
+        ''' in 32-bit applications. Points to "%WINDIR%\syswow64" in 64-bit applications or in
+        ''' 32-bit applications on a 64-bit operating system and to "%WINDIR%\system32" on 32-bit
+        ''' operating system
         ''' </summary>
         SystemX86
 
         ''' <summary>
-        ''' The per-user Templates folder
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Templates&quot;
+        ''' The per-user Templates folder Defaults to "%APPDATA%\Microsoft\Windows\Templates"
         ''' </summary>
         Templates
 
         ''' <summary>
-        ''' The per-user User Pinned folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned&quot;.
+        ''' The per-user User Pinned folder. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned".
         ''' </summary>
         UserPinned
 
         ''' <summary>
-        ''' The fixed Users folder. Introduced in Windows Vista.
-        ''' Points to &quot;%SYSTEMDRIVE%\Users&quot;.
+        ''' The fixed Users folder. Introduced in Windows Vista. Points to "%SYSTEMDRIVE%\Users".
         ''' </summary>
         UserProfiles
 
         ''' <summary>
-        ''' The per-user Programs folder. Introduced in Windows 7.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Programs.&quot;.
+        ''' The per-user Programs folder. Introduced in Windows 7. Defaults to
+        ''' "%LOCALAPPDATA%\Programs.".
         ''' </summary>
         UserProgramFiles
 
         ''' <summary>
-        ''' The per-user common Programs folder. INtroduced in Windows 7.
-        ''' Defaults to &quot;%LOCALAPPDATA%\Programs\Common&quot;.
+        ''' The per-user common Programs folder. INtroduced in Windows 7. Defaults to
+        ''' "%LOCALAPPDATA%\Programs\Common".
         ''' </summary>
         UserProgramFilesCommon
 
         ''' <summary>
-        ''' The per-user Videos folder.
-        ''' Defaults to &quot;%USERPROFILE%\Videos&quot;.
+        ''' The per-user Videos folder. Defaults to "%USERPROFILE%\Videos".
         ''' </summary>
         Videos
 
         ''' <summary>
-        ''' The per-user Videos library. Introduced in Windows 7.
-        ''' Defaults to &quot;%APPDATA%\Microsoft\Windows\Libraries\Videos.library-ms&quot;.
+        ''' The per-user Videos library. Introduced in Windows 7. Defaults to
+        ''' "%APPDATA%\Microsoft\Windows\Libraries\Videos.library-ms".
         ''' </summary>
         VideosLibrary
 
         ''' <summary>
-        ''' The fixed Windows folder.
-        ''' Points to &quot;%WINDIR%&quot;.
+        ''' The fixed Windows folder. Points to "%WINDIR%".
         ''' </summary>
         Windows
+
     End Enum
+
 #End Region
+
 End Module
