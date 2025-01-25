@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>DaddyNino.SpecialFolders</RootNamespace>
+    <RootNamespace>EightyNailz</RootNamespace>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Description>Library for working with Windows Special Folders</Description>
     <Title>Library for working with Windows Special Folders</Title>
